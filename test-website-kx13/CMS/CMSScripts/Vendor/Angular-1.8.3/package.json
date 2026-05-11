@@ -1,0 +1,9 @@
+{
+    "name": "angular",
+    "version": "1.8.3",
+    "description": "This file is used only to enable vulnerable dependency scanning. Keep versions in sync. When you update the source files to a newer version, update all versions also in package.json and package-lock.json.",
+    "peerDependencies": {
+      "angular": "1.8.3"
+    }
+  }
+  

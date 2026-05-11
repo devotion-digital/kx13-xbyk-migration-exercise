@@ -1,0 +1,16 @@
+@model TW.Web.Widgets.CallToAction.CallToActionWidgetViewModel
+
+<section class="widget widget--cta">
+    @if (!string.IsNullOrWhiteSpace(Model.Heading))
+    {
+        <h2 class="widget__heading">@Model.Heading</h2>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.SupportingText))
+    {
+        <p class="widget__text">@Model.SupportingText</p>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.ButtonText) && !string.IsNullOrWhiteSpace(Model.ButtonUrl))
+    {
+        <a class="widget__button" href="@Model.ButtonUrl">@Model.ButtonText</a>
+    }
+</section>

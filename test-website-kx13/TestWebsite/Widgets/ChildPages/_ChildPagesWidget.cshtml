@@ -1,0 +1,30 @@
+@model TestWebsite.Widgets.ChildPages.ChildPagesWidgetViewModel
+
+<section class="widget widget--child-pages">
+    @if (!string.IsNullOrWhiteSpace(Model.Heading))
+    {
+        <h2 class="widget__heading">@Model.Heading</h2>
+    }
+
+    @if (Model.Tiles.Count == 0)
+    {
+        <p class="widget__empty">No child pages to display.</p>
+    }
+    else
+    {
+        <ul class="tile-grid">
+            @foreach (var tile in Model.Tiles)
+            {
+                <li class="tile">
+                    <a class="tile__link" href="@tile.Url">
+                        <h3 class="tile__title">@tile.Title</h3>
+                        @if (!string.IsNullOrWhiteSpace(tile.Description))
+                        {
+                            <p class="tile__description">@tile.Description</p>
+                        }
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+</section>

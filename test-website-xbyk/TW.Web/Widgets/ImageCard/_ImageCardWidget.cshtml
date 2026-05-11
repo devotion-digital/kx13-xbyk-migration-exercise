@@ -1,0 +1,16 @@
+@model TW.Web.Widgets.ImageCard.ImageCardWidgetViewModel
+
+@{
+    var imageUrl = string.IsNullOrWhiteSpace(Model.ImageUrl) ? null : Url.Content(Model.ImageUrl);
+}
+
+<figure class="widget widget--image-card">
+    @if (imageUrl != null)
+    {
+        <img src="@imageUrl" alt="@Model.AltText" class="widget__image" />
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.Caption))
+    {
+        <figcaption class="widget__caption">@Model.Caption</figcaption>
+    }
+</figure>

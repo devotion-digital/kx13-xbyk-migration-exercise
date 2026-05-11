@@ -1,0 +1,12 @@
+@model TW.Web.Models.HomePageViewModel
+
+@{
+    ViewData["Title"] = string.IsNullOrWhiteSpace(Model.MetaTitle) ? Model.Name : Model.MetaTitle;
+    ViewData["MetaDescription"] = Model.MetaDescription;
+}
+
+@await Component.InvokeAsync("HomeHero", Model)
+
+<div class="container page-content">
+    <editable-area area-identifier="home-main" />
+</div>

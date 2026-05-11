@@ -1,0 +1,15 @@
+@model TW.Web.Models.HomePageViewModel
+
+@{
+    var heroUrl = string.IsNullOrWhiteSpace(Model.HeroImageUrl) ? null : Url.Content(Model.HeroImageUrl);
+}
+
+<section class="hero hero--home" style="@(heroUrl == null ? null : $"background-image: url('{heroUrl}');")">
+    <div class="container hero__inner">
+        <h1 class="hero__heading">@Model.Name</h1>
+        @if (!string.IsNullOrWhiteSpace(Model.Subheading))
+        {
+            <p class="hero__subheading">@Model.Subheading</p>
+        }
+    </div>
+</section>

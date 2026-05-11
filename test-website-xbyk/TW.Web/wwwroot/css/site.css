@@ -1,0 +1,542 @@
+:root {
+    --color-bg: #ffffff;
+    --color-text: #1a1a1a;
+    --color-muted: #6b7280;
+    --color-accent: #2563eb;
+    --color-border: #e5e7eb;
+    --max-width: 1100px;
+    --space: 1rem;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--color-text);
+    background: var(--color-bg);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space);
+}
+
+.site-header {
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space) 0;
+}
+
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.site-header__brand {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+}
+
+.site-nav {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.site-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.site-nav__item {
+    margin: 0;
+}
+
+.site-nav__link {
+    display: inline-block;
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color 120ms ease, border-color 120ms ease;
+}
+
+.site-nav__link:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom-color: var(--color-accent);
+}
+
+.site-header__logo {
+    max-height: 48px;
+    width: auto;
+}
+
+.site-header__placeholder {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.site-footer {
+    border-top: 1px solid var(--color-border);
+    margin-top: 4rem;
+    padding: 2rem 0;
+    color: var(--color-muted);
+}
+
+.site-footer__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space);
+    flex-wrap: wrap;
+}
+
+.site-footer__logo {
+    max-height: 32px;
+    width: auto;
+}
+
+.site-footer__text {
+    margin: 0;
+}
+
+.site-main {
+    min-height: 50vh;
+}
+
+.hero {
+    padding: 4rem 0;
+    background: #f3f4f6;
+    background-size: cover;
+    background-position: center;
+}
+
+.hero--home {
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    padding: 8rem 0;
+}
+
+.hero--content {
+    background: #f9fafb;
+    color: inherit;
+    text-shadow: none;
+}
+
+.hero__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space);
+}
+
+.hero__heading {
+    font-size: 2.5rem;
+    margin: 0 0 0.5rem;
+}
+
+.hero__subheading {
+    font-size: 1.25rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.page-content {
+    padding: 2rem 0;
+}
+
+.widget {
+    margin: 2rem 0;
+}
+
+.widget--cta {
+    padding: 2rem;
+    background: #f3f4f6;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.widget__heading {
+    font-size: 1.75rem;
+    margin: 0 0 0.5rem;
+}
+
+.widget__text {
+    margin: 0 0 1.25rem;
+}
+
+.widget__button {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.625rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.widget__button:hover {
+    text-decoration: none;
+    opacity: 0.9;
+}
+
+.widget--text {
+    font-size: 1.0625rem;
+}
+
+.widget--image-card {
+    margin: 2rem 0;
+}
+
+.widget__image {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.widget__caption {
+    margin-top: 0.5rem;
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    text-align: center;
+}
+
+.widget--child-pages .widget__heading {
+    text-align: left;
+}
+
+.widget__empty {
+    color: var(--color-muted);
+    font-style: italic;
+}
+
+.tile-grid {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.tile {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: #fff;
+    transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    border-color: var(--color-accent);
+}
+
+.tile__link {
+    display: block;
+    padding: 1.25rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+.tile__link:hover {
+    text-decoration: none;
+}
+
+.tile__title {
+    margin: 0 0 0.5rem;
+    font-size: 1.125rem;
+    color: var(--color-text);
+}
+
+.tile__description {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ----------------------------------------------------------------
+   Forms (Kentico online forms + standard MVC form controls)
+   ---------------------------------------------------------------- */
+
+form {
+    --form-label-col: 160px;
+    --form-col-gap: 1rem;
+    max-width: 640px;
+    margin: 0;
+}
+
+form > input[type="submit"],
+form > button[type="submit"],
+form > .FormButton {
+    margin-left: calc(var(--form-label-col) + var(--form-col-gap));
+}
+
+.form-field,
+.form-group {
+    display: grid;
+    grid-template-columns: var(--form-label-col, 160px) minmax(0, 1fr);
+    gap: 0.5rem var(--form-col-gap, 1rem);
+    align-items: start;
+    margin-bottom: 1.25rem;
+}
+
+.form-field > .editing-form-control-nested-control,
+.form-group > .editing-form-control-nested-control {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+
+label,
+.control-label,
+.editing-form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.form-field > label,
+.form-field > .control-label,
+.form-group > label,
+.form-group > .control-label {
+    margin-bottom: 0;
+    padding-top: 0.625rem;
+}
+
+/* Force inputs full-width regardless of bundled Kentico CSS */
+.form-field .form-control,
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="url"],
+.form-field input[type="tel"],
+.form-field input[type="number"],
+.form-field input[type="password"],
+.form-field input[type="search"],
+.form-field input[type="date"],
+.form-field input[type="datetime-local"],
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+/* Validation message lives in the input column on its own row */
+.form-field > .field-validation-error,
+.form-field > .EditingFormErrorLabel,
+.form-group > .field-validation-error,
+.form-group > .EditingFormErrorLabel {
+    grid-column: 2;
+}
+
+/* Stack on narrow viewports */
+@media (max-width: 600px) {
+    .form-field,
+    .form-group {
+        grid-template-columns: 1fr;
+    }
+    .form-field > label,
+    .form-field > .control-label,
+    .form-group > label,
+    .form-group > .control-label {
+        padding-top: 0;
+        margin-bottom: 0.25rem;
+    }
+    .form-field > .field-validation-error,
+    .form-field > .EditingFormErrorLabel,
+    .form-group > .field-validation-error,
+    .form-group > .EditingFormErrorLabel {
+        grid-column: 1;
+    }
+    form > input[type="submit"],
+    form > button[type="submit"],
+    form > .FormButton {
+        margin-left: 0;
+    }
+}
+
+.form-control,
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="date"],
+input[type="datetime-local"],
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: var(--color-text);
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+textarea {
+    min-height: 7rem;
+    resize: vertical;
+}
+
+.form-control:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: auto;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+.checkbox label,
+.radio label,
+.editing-form-control-nested-control label[for$="_checkbox"] {
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+}
+
+.explanation-text,
+.editing-form-control-nested-control small {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+}
+
+/* Buttons */
+button,
+input[type="submit"],
+.btn,
+.btn-default,
+.btn-primary,
+.FormButton {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #fff;
+    border: 1px solid var(--color-accent);
+    padding: 0.625rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 120ms ease, transform 120ms ease;
+}
+
+button:hover,
+input[type="submit"]:hover,
+.btn:hover,
+.btn-default:hover,
+.btn-primary:hover,
+.FormButton:hover {
+    opacity: 0.92;
+    text-decoration: none;
+}
+
+button:active,
+input[type="submit"]:active,
+.btn:active,
+.FormButton:active {
+    transform: translateY(1px);
+}
+
+button[disabled],
+input[type="submit"][disabled],
+.btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Validation */
+.field-validation-error,
+.EditingFormErrorLabel,
+.input-validation-error + .field-validation-error {
+    display: block;
+    margin-top: 0.375rem;
+    color: #dc2626;
+    font-size: 0.875rem;
+}
+
+.input-validation-error,
+.form-control.input-validation-error,
+input.input-validation-error,
+select.input-validation-error,
+textarea.input-validation-error {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.validation-summary-errors,
+.EditingFormErrorMessageBoxContent {
+    margin-bottom: 1.25rem;
+    padding: 0.875rem 1rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    color: #991b1b;
+    font-size: 0.9375rem;
+}
+
+.validation-summary-errors ul {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+/* Submission confirmation */
+.FormSubmitted,
+.formwidget-submit-text {
+    padding: 1.25rem;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 6px;
+    color: #065f46;
+}

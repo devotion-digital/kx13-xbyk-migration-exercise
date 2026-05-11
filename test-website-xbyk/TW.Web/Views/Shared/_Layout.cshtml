@@ -1,0 +1,29 @@
+@{
+    var metaTitle = ViewData["Title"] as string;
+    var metaDescription = ViewData["MetaDescription"] as string;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(string.IsNullOrWhiteSpace(metaTitle) ? "TW.Web" : metaTitle)</title>
+    @if (!string.IsNullOrWhiteSpace(metaDescription))
+    {
+        <meta name="description" content="@metaDescription" />
+    }
+    <link rel="stylesheet" href="~/css/site.css" />
+    <page-builder-styles />
+</head>
+<body>
+    @await Component.InvokeAsync("Header")
+
+    <main class="site-main">
+        @RenderBody()
+    </main>
+
+    @await Component.InvokeAsync("Footer")
+
+    <page-builder-scripts />
+</body>
+</html>

@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup Label="Globals">
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>annotations</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="kentico.xperience.aspnetcore.webapp" Version="13.0.197" />
+  </ItemGroup>
+</Project>

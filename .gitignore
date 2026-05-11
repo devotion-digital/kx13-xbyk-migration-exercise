@@ -1,0 +1,187 @@
+# ============================================================================
+# kx13-xbyk-migration-exercise, .gitignore
+# Covers:
+#   - test-website-kx13/  (Kentico 13, .NET Framework 4.8, packages.config NuGet)
+#   - test-website-xbyk/  (Xperience by Kentico 31.x, .NET 8 SDK-style)
+#   - migration-tool/     (cloned Kentico Migration Tool source, .NET 8)
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Visual Studio / .NET build output
+# ----------------------------------------------------------------------------
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]uild/
+[Bb]uildResults/
+[Pp]ublish/
+publish/
+PublishProfiles/*.pubxml.user
+
+# MSBuild
+*.binlog
+*.tlog
+*.cache
+*.ipdb
+*.iobj
+
+# ----------------------------------------------------------------------------
+# Visual Studio user-specific
+# ----------------------------------------------------------------------------
+.vs/
+*.user
+*.userprefs
+*.suo
+*.userosscache
+*.sln.docstates
+*.psess
+*.vsp
+*.vspx
+*.sap
+*.VC.db
+*.VC.VC.opendb
+
+# Rider / ReSharper
+.idea/
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# VS Code (keep settings.json opt-in, exclude per-machine state)
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/*.log
+
+# ----------------------------------------------------------------------------
+# NuGet — never commit restored packages
+# ----------------------------------------------------------------------------
+# packages.config style (K13 uses this — `test-website-kx13/packages/`)
+**/packages/
+!**/packages/build/
+!**/packages/repositories.config
+!**/packages/packages.config
+*.nupkg
+*.snupkg
+project.lock.json
+project.assets.json
+.nuget/
+# Allow MSBuild SDKs that some Kentico projects ship inside their tree
+!**/packages/Microsoft.Build.*/**
+
+# ----------------------------------------------------------------------------
+# Test results, coverage, profiling
+# ----------------------------------------------------------------------------
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+*.dotCover
+
+# ----------------------------------------------------------------------------
+# Kentico 13 — runtime, generated, cache
+#   (Note: keep App_Data/ structure under source control; ignore the
+#    sub-folders that are written at runtime.)
+# ----------------------------------------------------------------------------
+test-website-kx13/CMS/App_Data/AzureCache/
+test-website-kx13/CMS/App_Data/CMSTemp/
+test-website-kx13/CMS/App_Data/CMSModules/SmartSearch/_local/
+test-website-kx13/CMS/App_Data/CMSModules/WebFarm/
+test-website-kx13/CMS/App_Data/CMSModules/ImageEditor/
+test-website-kx13/CMS/App_Data/CIRepository/
+test-website-kx13/CMS/App_Data/Persistent/
+test-website-kx13/CMS/App_Data/CMSLogs/
+test-website-kx13/CMS/App_Data/CMSScheduler/
+test-website-kx13/CMS/App_Data/CMSStatistics/
+
+# K13 web project debug / publish artefacts
+test-website-kx13/CMS/CMSPages/Default/
+test-website-kx13/CMS/PrecompiledWeb/
+
+# ----------------------------------------------------------------------------
+# Xperience by Kentico (XbyK) — runtime, generated, cache
+# ----------------------------------------------------------------------------
+test-website-xbyk/**/App_Data/
+test-website-xbyk/**/assets/
+test-website-xbyk/**/wwwroot/contentitemassets/
+test-website-xbyk/**/wwwroot/mediafiles/
+test-website-xbyk/**/wwwroot/getmedia/
+test-website-xbyk/**/wwwroot/getattachment/
+test-website-xbyk_clean/**/App_Data/
+test-website-xbyk_clean/**/assets/
+test-website-xbyk_clean/**/wwwroot/contentitemassets/
+test-website-xbyk_clean/**/wwwroot/mediafiles/
+test-website-xbyk_clean/**/wwwroot/getmedia/
+test-website-xbyk_clean/**/wwwroot/getattachment/
+
+# Local SQLite/LocalDB instances some XbyK tooling drops
+*.db
+*.db-shm
+*.db-wal
+*.mdf
+*.ldf
+
+# ----------------------------------------------------------------------------
+# Migration Tool — output of the cloned tool source
+# ----------------------------------------------------------------------------
+migration-tool/**/bin/
+migration-tool/**/obj/
+migration-tool/**/appsettings.*.local.json
+migration-tool/**/Logs/
+migration-tool/**/Migration.Tool.CLI/bin/
+migration-tool/**/Migration.Tool.CLI/obj/
+
+# ----------------------------------------------------------------------------
+# Secrets, local config, environment
+# ----------------------------------------------------------------------------
+*.pfx
+*.snk
+*.publishsettings
+*.envrc
+.env
+.env.*
+!.env.example
+secrets.json
+appsettings.*.Development.json
+appsettings.Local.json
+appsettings.Development.json
+
+# ----------------------------------------------------------------------------
+# OS noise
+# ----------------------------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ----------------------------------------------------------------------------
+# Claude Code workspace
+# ----------------------------------------------------------------------------
+.claude/worktrees/
+.claude/settings.local.json
+
+# ----------------------------------------------------------------------------
+# Internal-only / maintainer files (do not ship to candidates)
+# ----------------------------------------------------------------------------
+EVALUATION.md
+MAINTAINER.md

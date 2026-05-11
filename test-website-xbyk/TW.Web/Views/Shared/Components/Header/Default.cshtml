@@ -1,0 +1,21 @@
+@model TW.Web.Models.SiteConfigurationViewModel
+
+@{
+    var logoUrl = string.IsNullOrWhiteSpace(Model.LogoUrl) ? null : Url.Content(Model.LogoUrl);
+}
+
+<header class="site-header">
+    <div class="container site-header__inner">
+        <a class="site-header__brand" href="/" aria-label="Home">
+            @if (logoUrl != null)
+            {
+                <img src="@logoUrl" alt="Site logo" class="site-header__logo" />
+            }
+            else
+            {
+                <span class="site-header__placeholder">TestWebsite</span>
+            }
+        </a>
+        @await Component.InvokeAsync("Navigation")
+    </div>
+</header>

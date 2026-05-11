@@ -1,0 +1,18 @@
+@model TW.Web.Models.SiteConfigurationViewModel
+
+@{
+    var logoUrl = string.IsNullOrWhiteSpace(Model.LogoUrl) ? null : Url.Content(Model.LogoUrl);
+}
+
+<footer class="site-footer">
+    <div class="container site-footer__inner">
+        @if (logoUrl != null)
+        {
+            <img src="@logoUrl" alt="Site logo" class="site-footer__logo" />
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.FooterText))
+        {
+            <p class="site-footer__text">@Model.FooterText</p>
+        }
+    </div>
+</footer>

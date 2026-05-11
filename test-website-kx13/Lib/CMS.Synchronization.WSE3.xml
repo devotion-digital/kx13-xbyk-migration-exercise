@@ -1,0 +1,757 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CMS.Synchronization.WSE3</name>
+    </assembly>
+    <members>
+        <member name="T:CMS.Synchronization.WSE3.AuthenticationCheckerExtension">
+            <summary>
+            SOAP extension for checking staging request authentication.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.AuthenticationCheckerExtension.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CMS.Synchronization.WSE3.AuthenticationCheckerExtension"/> class.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.AuthenticationCheckerExtension.GetInitializer(System.Web.Services.Protocols.LogicalMethodInfo,System.Web.Services.Protocols.SoapExtensionAttribute)">
+            <inheritdoc />
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.AuthenticationCheckerExtension.GetInitializer(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.AuthenticationCheckerExtension.Initialize(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.AuthenticationCheckerExtension.ProcessMessage(System.Web.Services.Protocols.SoapMessage)">
+            <inheritdoc />
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.ISyncClient2">
+            <summary>
+            Client for sending staging requests without WSE3
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ISyncClient2.ProcessSyncTask(CMS.Synchronization.StagingTaskInfo,CMS.Synchronization.ServerInfo)">
+            <summary>
+            Sends given staging task to a given server.
+            </summary>
+            <param name="stagingTaskInfo">The task data to send.</param>
+            <param name="serverInfo">The server to which to send the task data.</param>
+            <returns>The response from the server.</returns>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.ISyncClientUtils">
+            <summary>
+            Methods with functionality shared between old and new staging client.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ISyncClientUtils.GetFullServerUrl(System.String,System.String)">
+            <summary>
+            Returns full path of the SyncServer.asmx or SyncServer.ashx server from the starting path of target server instance.
+            If the full path in the old format comes, the suffix /CMSPages/SyncServer.asmx or /CMSPages/SyncServer.ashx is trimmed and replaced by the current location.
+            </summary>
+            <param name="serverServiceBaseUrl">Synchronization server base URL.</param>
+            <param name="serviceLocation">The current service location.</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ISyncClientUtils.TryProcessTask(CMS.Synchronization.StagingTaskInfo,System.Func{CMS.Synchronization.StagingTaskData,System.String})">
+            <summary>
+            Attempts to run the given staging task with the given delegate, including error handling.
+            </summary>
+            <param name="taskInfo">The data of the task to process.</param>
+            <param name="taskProcessDelegate">The delegate which will process the task.</param>
+            <returns>Empty string if the task was processed successfully, error message otherwise.</returns>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.ISyncManagerWrapper">
+            <summary>
+            Wrapper for <seealso cref="T:CMS.Synchronization.SyncManager"/> so that it can be used with DI
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ISyncManagerWrapper.ProcessTask(CMS.Synchronization.StagingTaskData)">
+            <summary>
+            Passes the staging task data to <seealso cref="T:CMS.Synchronization.SyncManager"/> for processing
+            </summary>
+            <param name="stagingTaskData">The task data to process</param>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.ISyncServerUtils">
+            <summary>
+            Mathods with functionality shared between old and new staging.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ISyncServerUtils.CheckVersion(CMS.Synchronization.StagingTaskData)">
+            <summary>
+            Checks if the incoming task data are from instance running the same version of KX13.
+            </summary>
+            <param name="stagingTaskData">The task data to check.</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ISyncServerUtils.GetError(System.String)">
+            <summary>
+            Creates an error message with a given content.
+            </summary>
+            <param name="errorMsg">The content of the error message.</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ISyncServerUtils.IsStagingAvailable">
+            <summary>
+            Checks if the staging feature is available.
+            </summary>
+            <returns>Empty string if staging is available, a string describing the reason for the unavailability otherwise.</returns>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ISyncServerUtils.ProcessException(System.Exception)">
+            <summary>
+            Processes and logs the given exception.
+            </summary>
+            <param name="ex">The exception to process.</param>
+            <returns>The string that should be sent in a response to the staging request.</returns>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.IX509StoreLocationProvider">
+            <summary>
+            Describes provider for retrieving certificate store location.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IX509StoreLocationProvider.GetStoreLocation">
+            <summary>
+            Returns store location used for X.509 certificate store.
+            </summary>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.IJWTGenerator">
+            <summary>
+            Interface for generating and signing JWT tokens for requests.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTGenerator.GenerateJWT(CMS.Synchronization.ServerInfo,System.String)">
+            <summary>
+            Generates a JWT string with signature based on <paramref name="serverInfo"/> and containing <paramref name="checksum"/> as a claim.
+            </summary>
+            <param name="serverInfo">The <see cref="T:CMS.Synchronization.ServerInfo"/> from which to take data for signing.</param>
+            <param name="checksum">The checksum that will be included as a part of claims in the JWT token to validate integrity of the message.</param>
+            <returns>
+            A string representing the JWT.
+            </returns>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.IJWTUtils">
+            <summary>
+            Interface for JWT utility methods.
+            </summary>
+            <remarks>
+            Mainly serves to wrap functionality from <see cref="N:System.IdentityModel"/> to improve testability.
+            </remarks>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTUtils.IsStagingEnabled">
+            <summary>
+            Returns true if staging is enabled.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTUtils.Validate(System.String,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
+            <summary>
+            Validates the given JWT token.
+            </summary>
+            <param name="jwtToken">The JWT token to validate.</param>
+            <param name="validationParameters">The token validation parameters.</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTUtils.Generate(Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor)">
+            <summary>
+            Generates a JWT token based on the given token descriptor.
+            </summary>
+            <param name="tokenDescriptor">The token descriptor.</param>
+            <returns>The generated JWT token.</returns>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTUtils.GetServerSymmetricSecurityKey">
+            <summary>
+            Gets the symmetric security key for staging server based on set username and password.
+            </summary>
+            <returns>The symmetric security key.</returns>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTUtils.GetSymmetricSecurityKey(System.String)">
+            <summary>
+            Gets the symmetric security key based on the given secret.
+            </summary>
+            <param name="secret">The secret.</param>
+            <returns>The symmetric security key.</returns>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTUtils.GetAsymmetricSecurityKey(System.String)">
+            <summary>
+            Gets the asymmetric security key based on X509 certificate with given ID.
+            </summary>
+            <param name="Id">The ID of the X509 certificate.</param>
+            <returns>The asymmetric security key.</returns>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTUtils.GetServerX509KeyId">
+            <summary>
+            Gets the server X509 certificate ID.
+            </summary>
+            <returns>The server X509 certificate ID.</returns>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTUtils.GetServerAuthenticationMethod">
+            <summary>
+            Returns the authentication method used when receiving staging data.
+            </summary>
+            <returns>"x509" when using certificates as authentication method, "username" when using username and password as authentication method.</returns>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTUtils.IsLegacyStagingEnabled">
+            <summary>
+            Returns true if legacy staging is enabled in the staging settings.
+            </summary>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.IJWTValidator">
+            <summary>
+            Interface for validating JWT tokens in the request context.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IJWTValidator.ValidateJWT(System.String,System.IdentityModel.Tokens.Jwt.JwtSecurityToken@)">
+            <summary>
+            Validates the given JWT token.
+            </summary>
+            <param name="jwt">The JWT to validate.</param>
+            <param name="jwtSecurityToken">If the JWT was valid, security token of the JWT, null otherwise.</param>
+            <returns>True if the JWT was valid, false otherwise.</returns>
+        </member>
+        <member name="P:CMS.Synchronization.WSE3.ILegacyStagingRequestsSigningService.ServerInfo">
+            <summary>
+            Gets or sets the server information used for generating JWT tokens.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ILegacyStagingRequestsSigningService.SignRequest(System.Net.HttpWebRequest)">
+            <summary>
+            Signs the given HTTP request with a JWT token.
+            </summary>
+            <param name="request">The HTTP request to sign.</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IStagingAuthenticationValidator.WasRequestValidated(System.Web.HttpContextBase)">
+            <summary>
+            Returns true if the request was already validated.
+            </summary>
+            <param name="context">The request context.</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.IStagingAuthenticationValidator.ValidateRequestContext(System.Web.HttpContextBase,System.IdentityModel.Tokens.Jwt.JwtSecurityToken@,System.Boolean)">
+            <summary>
+            Validates the JWT token in the given HTTP context.
+            </summary>
+            <param name="context">The HTTP context containing the JWT token.</param>
+            <param name="jwtSecurityToken">The JWT token if the request is valid, otherwise null.</param>
+            <param name="endInvalidRequests">Whether or not should invalid requests be immediately terminated.</param>
+            <returns>True if the token is valid, false otherwise.</returns>
+            <remarks>This method handles setting a appropriate response to invalid requests, unless <paramref name="endInvalidRequests"/> is set to true.</remarks>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.JWTGenerator">
+            <summary>
+            Generates and signs JWT tokens for HTTP requests.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTGenerator.#ctor(CMS.Synchronization.WSE3.IJWTUtils)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CMS.Synchronization.WSE3.JWTGenerator"/> class.
+            </summary>
+            <param name="utils">The JWT utility methods.</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTGenerator.GenerateJWT(CMS.Synchronization.ServerInfo,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.JWTUtils">
+            <summary>
+            JWT utility methods.
+            </summary>
+            <remarks>
+            Mainly serves to wrap functionality from <see cref="N:System.IdentityModel"/> to improve testability.
+            </remarks>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTUtils.IsStagingEnabled">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTUtils.GetServerAuthenticationMethod">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTUtils.Validate(System.String,Microsoft.IdentityModel.Tokens.TokenValidationParameters)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTUtils.Generate(Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTUtils.GetServerSymmetricSecurityKey">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTUtils.GetSymmetricSecurityKey(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTUtils.GetAsymmetricSecurityKey(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTUtils.GetServerX509KeyId">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTUtils.IsLegacyStagingEnabled">
+            <inheritdoc/>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.JWTValidationResult">
+            <summary>
+            Enum containing all the possible results of JWT token validation.
+            </summary>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.JWTValidator">
+            <summary>
+            Validates JWT tokens in the request context.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTValidator.#ctor(CMS.Synchronization.WSE3.IJWTUtils)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CMS.Synchronization.WSE3.JWTValidator"/> class.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.JWTValidator.ValidateJWT(System.String,System.IdentityModel.Tokens.Jwt.JwtSecurityToken@)">
+            <inheritdoc />
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.LegacyStagingRequestsSigningService.#ctor(CMS.Synchronization.WSE3.IJWTGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CMS.Synchronization.WSE3.LegacyStagingRequestsSigningService"/> class.
+            </summary>
+        </member>
+        <member name="P:CMS.Synchronization.WSE3.LegacyStagingRequestsSigningService.ServerInfo">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.LegacyStagingRequestsSigningService.SignRequest(System.Net.HttpWebRequest)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.StagingAuthenticationValidator.WasRequestValidated(System.Web.HttpContextBase)">
+            <inheritdoc />
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.StagingAuthenticationValidator.ValidateRequestContext(System.Web.HttpContextBase,System.IdentityModel.Tokens.Jwt.JwtSecurityToken@,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.WSE3Module">
+            <summary>
+            Represents the WSE3 module.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.WSE3Module.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.WSE3Module.OnInit">
+            <summary>
+            Initializes the module.
+            </summary>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.WSE3ModuleMetadata">
+            <summary>
+            Represents the WSE3 module metadata.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.WSE3ModuleMetadata.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.ServiceAssertion">
+            <summary>
+            X509 service assertion.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ServiceAssertion.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ServiceAssertion.CreateClientOutputFilter(Microsoft.Web.Services3.Design.FilterCreationContext)">
+            <summary>
+            No client output filter.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ServiceAssertion.CreateClientInputFilter(Microsoft.Web.Services3.Design.FilterCreationContext)">
+            <summary>
+            No client input filter.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ServiceAssertion.CreateServiceInputFilter(Microsoft.Web.Services3.Design.FilterCreationContext)">
+            <summary>
+            Service input filter.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ServiceAssertion.CreateServiceOutputFilter(Microsoft.Web.Services3.Design.FilterCreationContext)">
+            <summary>
+            No service output filter.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ServiceAssertion.ReadXml(System.Xml.XmlReader,System.Collections.Generic.IDictionary{System.String,System.Type})">
+            <summary>
+            Reading the request.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ServiceAssertion.WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes the XML.
+            </summary>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.ServiceInputFilter">
+            <summary>
+            X509 Service input filter.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ServiceInputFilter.#ctor(CMS.Synchronization.WSE3.ServiceAssertion,Microsoft.Web.Services3.Design.FilterCreationContext)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parentAssertion">Parent assertion</param>
+            <param name="filterContext">Filter context</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ServiceInputFilter.ValidateMessageSecurity(Microsoft.Web.Services3.SoapEnvelope,Microsoft.Web.Services3.Security.Security)">
+            <summary>
+            Validates the message security.
+            </summary>
+            <param name="envelope">Message envelope</param>
+            <param name="security">Security context</param>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.ServicePolicy">
+            <summary>
+            Service policy
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.ServicePolicy.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.Server.SyncServerWse.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.Server.SyncServerWse.ProcessSynchronizationTaskData(CMS.Synchronization.StagingTaskData)">
+            <summary>
+            Synchronizes StagingTaskData to target server.
+            </summary>
+            <param name="stagingTaskData">StagingTaskData to be synchronized</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.Server.SyncServerWse.ProcessSynchronizationTaskData(System.String)">
+            <summary>
+            Synchronizes StagingTaskData to target server.
+            </summary>
+            <param name="stagingTaskData">Serialized StagingTaskData</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.Server.SyncServerWse.ProcessSynchronizationTaskDataAsync(System.String,System.Object)">
+            <summary>
+            Synchronizes StagingTaskData to target server in asynchronous manner.
+            </summary>
+            <param name="stagingTaskData"></param>
+            <param name="userState"></param>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.SyncClient">
+            <summary>
+            Synchronization client.
+            </summary>
+        </member>
+        <member name="P:CMS.Synchronization.WSE3.SyncClient.Timeout">
+            <summary>
+            Gets timeout for staging service.
+            </summary>
+        </member>
+        <member name="P:CMS.Synchronization.WSE3.SyncClient.UseConfigFile">
+            <summary>
+            Indicates if external configuration file should be used (wse3policy.config).
+            </summary>
+        </member>
+        <member name="P:CMS.Synchronization.WSE3.SyncClient.StagingSOAPMustUnderstand">
+            <summary>
+            Gets or sets the value that indicates whether staging SOAP must understand.
+            </summary>
+        </member>
+        <member name="P:CMS.Synchronization.WSE3.SyncClient.Service">
+            <summary>
+            Synchronization service.
+            </summary>
+        </member>
+        <member name="P:CMS.Synchronization.WSE3.SyncClient.Server">
+            <summary>
+            Synchronization server.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncClient.RunTask(CMS.Synchronization.StagingTaskInfo)">
+            <summary>
+            Runs the synchronization task.
+            </summary>
+            <param name="taskObj">Task object</param>
+            <returns>Returns error message</returns>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncClient2.#ctor(CMS.Synchronization.WSE3.ISyncClientUtils,CMS.Synchronization.WSE3.IJWTGenerator,CMS.Core.IAppSettingsService)">
+            <summary>
+            Initializes a new instance of <see cref="T:CMS.Synchronization.WSE3.SyncClient2"/>
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncClient2.ProcessSyncTask(CMS.Synchronization.StagingTaskInfo,CMS.Synchronization.ServerInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.SyncClientProxy">
+            <inheritdoc cref="T:CMS.Synchronization.Internal.ISyncClientProxy"/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncClientProxy.#ctor(CMS.Synchronization.WSE3.ISyncClient2,System.IServiceProvider)">
+            <summary>
+            Initializes a new instance of <see cref="T:CMS.Synchronization.WSE3.SyncClientProxy"/>
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncClientProxy.ProcessSyncTask(CMS.Synchronization.StagingTaskInfo,CMS.Synchronization.ServerInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.SyncClientUtils">
+            <inheritdoc cref="T:CMS.Synchronization.WSE3.ISyncClientUtils"/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncClientUtils.GetFullServerUrl(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncClientUtils.TryProcessTask(CMS.Synchronization.StagingTaskInfo,System.Func{CMS.Synchronization.StagingTaskData,System.String})">
+            <inheritdoc/>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.SyncManagerWrapper">
+            <inheritdoc cref="T:CMS.Synchronization.WSE3.ISyncManagerWrapper"/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncManagerWrapper.ProcessTask(CMS.Synchronization.StagingTaskData)">
+            <inheritdoc/>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.SyncServer">
+            <summary>
+            Content staging service.
+            </summary>
+        </member>
+        <member name="F:CMS.Synchronization.WSE3.SyncServer.UseTreeCustomHandlers">
+            <summary>
+            Indicates if custom handlers should be used for document staging operations.
+            </summary>
+        </member>
+        <member name="F:CMS.Synchronization.WSE3.SyncServer.UseAutomaticOrdering">
+            <summary>
+            Indicates if automatic ordering for documents should be used on target server.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncServer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CMS.Synchronization.WSE3.SyncServer"/> class.
+            </summary>
+        </member>
+        <member name="P:CMS.Synchronization.WSE3.SyncServer.SyncManager">
+            <summary>
+            SyncHelper instance.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncServer.ProcessSynchronizationTaskData(System.String)">
+            <summary>
+            Processes the given synchronization task.
+            </summary>
+            <param name="stagingTaskData">Serialized staging task data</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncServer.ProcessSynchronizationTaskInternal(CMS.Synchronization.StagingTaskData)">
+            <summary>
+            Processes the given synchronization task.
+            </summary>
+            <param name="stagingTaskData">Serialized staging task data</param>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.SyncServerUtils">
+            <inheritdoc cref="T:CMS.Synchronization.WSE3.ISyncServerUtils"/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncServerUtils.#ctor(CMS.Core.IEventLogService)">
+            <summary>
+            Initializes a new instance of <see cref="T:CMS.Synchronization.WSE3.SyncServerUtils"/>
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncServerUtils.IsStagingAvailable">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncServerUtils.GetError(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncServerUtils.CheckVersion(CMS.Synchronization.StagingTaskData)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncServerUtils.ProcessException(System.Exception)">
+            <inheritdoc/>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.SyncServerv2">
+            Handler for staging HTTP requests without WSE3
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.SyncServerv2.ProcessRequest(System.Web.HttpContext)">
+            <summary>
+            Method called by the framework to process incoming requests.
+            </summary>
+            <param name="context">Context of the request.</param>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.WebServiceAuthorization">
+            <summary>
+            Web service authorization interface for username authentication.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.WebServiceAuthorization.VerifyToken(Microsoft.Web.Services3.Security.Tokens.SecurityToken)">
+            <summary>
+            Verifies the incoming username token.
+            </summary>
+            <param name="token">Token to verify</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.WebServiceAuthorization.AuthenticateToken(Microsoft.Web.Services3.Security.Tokens.UsernameToken)">
+            <summary>
+            Authentication function, returns the password for specified username.
+            </summary>
+            <param name="token">Token to authorize against</param>
+            <exception cref="T:System.Security.SecurityException">Thrown when staging has no password set.</exception>
+            <exception cref="T:System.ArgumentNullException">Thrown when username authentication token is missing.</exception>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.X509ClientAssertion">
+            <summary>
+            X509 Security assertion.
+            </summary>
+        </member>
+        <member name="P:CMS.Synchronization.WSE3.X509ClientAssertion.ClientKeyId">
+            <summary>
+            Client certificate key ID.
+            </summary>
+        </member>
+        <member name="P:CMS.Synchronization.WSE3.X509ClientAssertion.ServerKeyId">
+            <summary>
+            Server certificate key ID.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509ClientAssertion.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="clientKeyId">Client certificate key ID</param>
+            <param name="serverKeyId">Server certificate key ID</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509ClientAssertion.CreateClientOutputFilter(Microsoft.Web.Services3.Design.FilterCreationContext)">
+            <summary>
+            Client output filter.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509ClientAssertion.CreateClientInputFilter(Microsoft.Web.Services3.Design.FilterCreationContext)">
+            <summary>
+            No client input filter.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509ClientAssertion.CreateServiceInputFilter(Microsoft.Web.Services3.Design.FilterCreationContext)">
+            <summary>
+            No service input filter.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509ClientAssertion.CreateServiceOutputFilter(Microsoft.Web.Services3.Design.FilterCreationContext)">
+            <summary>
+            No service output filter.
+            </summary>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.X509ClientOutputFilter">
+            <summary>
+            Client output filter.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509ClientOutputFilter.#ctor(CMS.Synchronization.WSE3.X509ClientAssertion,Microsoft.Web.Services3.Design.FilterCreationContext)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parentAssertion">Parent assertion</param>
+            <param name="filterContext">Filter context</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509ClientOutputFilter.SecureMessage(Microsoft.Web.Services3.SoapEnvelope,Microsoft.Web.Services3.Security.Security)">
+            <summary>
+            Secures the message context.
+            </summary>
+            <param name="envelope">Message envelope</param>
+            <param name="security">Security context</param>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.X509Helper">
+            <summary>
+            Helper class for X509 standard
+            </summary>
+        </member>
+        <member name="F:CMS.Synchronization.WSE3.X509Helper.mX509Certificates">
+            <summary>
+            Hashtable of the X509 certificates indexed by keyIdentifier.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.GetClientX509TokenKey(System.String)">
+            <summary>
+            Returns client token key.
+            </summary>
+            <param name="siteName">Site name</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.GetServerX509TokenKey(System.String)">
+            <summary>
+            Returns server token key.
+            </summary>
+            <param name="siteName">Site name</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.GetX509Token(System.String)">
+            <summary>
+            Returns the security token for X509 authentication.
+            </summary>
+            <param name="keyIdentifier">Token key identifier</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.FetchCertificate(System.String)">
+            <summary>
+            Retrieves certificate with <paramref name="keyId"/>.
+            </summary>
+            <param name="keyId">The ID of the certificate to retrieve.</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.RetrieveX509TokenFromStore(System.Security.Cryptography.X509Certificates.StoreLocation,System.Security.Cryptography.X509Certificates.StoreName,System.String)">
+            <summary>
+            Retrieves the X509 security token from the store.
+            </summary>
+            <param name="storeLocation">Store location</param>
+            <param name="storeName">Store name</param>
+            <param name="keyIdentifier">Token key identifier</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.CheckClientX509Token(Microsoft.Web.Services3.Security.Tokens.X509SecurityToken,System.String)">
+            <summary>
+            Returns true if given client token is valid.
+            </summary>
+            <param name="token">Token to check</param>
+            <param name="siteName">Site name</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.CheckServerX509Token(Microsoft.Web.Services3.Security.Tokens.X509SecurityToken,System.String)">
+            <summary>
+            Returns true if given server token is valid.
+            </summary>
+            <param name="token">Token to check</param>
+            <param name="siteName">Site name</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.GetSigningX509Token(Microsoft.Web.Services3.SoapContext,Microsoft.Web.Services3.Security.Security)">
+            <summary>
+            This method checks if the incoming message has signed all the important message parts such as soap:Body, all the addressing headers and timestamp.
+            </summary>
+            <param name="context">Soap context to get the signing token for</param>
+            <param name="security">Security context</param>
+            <returns>The signing token</returns>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.CheckSignature(Microsoft.Web.Services3.SoapContext,Microsoft.Web.Services3.Security.Security,Microsoft.Web.Services3.Security.MessageSignature)">
+            <summary>
+            Checks the context signature of the message.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.VerifyMessageParts(Microsoft.Web.Services3.SoapContext)">
+            <summary>
+            Verifies, if all the required message parts are present.
+            </summary>
+            <param name="context">Soap context</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.CompareArray(System.Byte[],System.Byte[])">
+            <summary>
+            Compares two byte arrays, returns true, if they are equal.
+            </summary>
+            <param name="a">Array 1</param>
+            <param name="b">Array 2</param>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509Helper.CheckUsernameToken(Microsoft.Web.Services3.Security.Tokens.UsernameToken,System.String)">
+            <summary>
+            Returns true if given client token is valid.
+            </summary>
+            <param name="token">Token to check</param>
+            <param name="siteName">Site name</param>
+        </member>
+        <member name="T:CMS.Synchronization.WSE3.X509StoreLocationProvider">
+            <summary>
+            Base implementation of <see cref="T:CMS.Synchronization.WSE3.IX509StoreLocationProvider"/>.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509StoreLocationProvider.#ctor">
+            <summary>
+            Initializes a new instance of <see cref="T:CMS.Synchronization.WSE3.X509StoreLocationProvider"/>.
+            </summary>
+        </member>
+        <member name="M:CMS.Synchronization.WSE3.X509StoreLocationProvider.GetStoreLocation">
+            <summary>
+            Returns store location used for X.509 certificate store.
+            </summary>
+        </member>
+    </members>
+</doc>
